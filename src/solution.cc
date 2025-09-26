@@ -50,9 +50,24 @@ std::vector<Log> Filter(const std::vector<Log>& logs, DateTime start, DateTime e
 }
 
 void WriteMetrics(const std::vector<Log>& logs, const std::string& filename) {
-  std::cout << "Metric,Count\n" << std::endl;
-  unsigned int counts_404 = 0;
-  unsigned int counts_500 = 0;
-  unsigned int other_counts = logs.size();
+  std::ofstream ofs (filename);
+  ofs << "Metrics,Count\n";
+  ofs << "Total Entries," << logs.size() << "\n";
 
+  int counts_404 = 0;
+  int counts_500 = 0;
+  int other_counts = 0;
+  for (Log l : logs) {
+    if (l.level == 404) {
+      ++counts_404;
+    } else if (l.level == 500) {
+      ++counts_500;
+    } else {
+      ++other_counts;
+    }
+  }
+
+  ofs << "404," << counts_404 << "\n";
+  ofs << "500," << counts_500 << "\n";
+  ofs << "Other," << other_counts;
 }
