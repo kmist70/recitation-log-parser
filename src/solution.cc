@@ -51,7 +51,7 @@ std::vector<Log> Filter(const std::vector<Log>& logs, DateTime start, DateTime e
 
 void WriteMetrics(const std::vector<Log>& logs, const std::string& filename) {
   std::ofstream ofs (filename);
-  ofs << "Metrics,Count\n";
+  ofs << "Metric,Count\n";
   ofs << "Total Entries," << logs.size() << "\n";
 
   int counts_404 = 0;
